@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { Reorder, motion } from 'framer-motion';
 import styled from 'styled-components';
 
 const activeColors = props => {
@@ -17,7 +17,7 @@ const activeColors = props => {
 };
 
 export const Wrapper = styled.div`
-  position: absolute;
+  position: relative;
   top: 85px;
   right: 30px;
   padding: 10px 15px;
@@ -42,11 +42,23 @@ export const Button = styled.button`
   border-radius: 50%;
   cursor: pointer;
   transition: opacity 500ms linear;
-  &:hover {
-    opacity: 0.5;
-  }
 `;
 export const Text = styled.p``;
+
+export const MotionReorderItem = styled(Reorder.Item)`
+  :first-child {
+    margin-top: 0;
+  }
+  margin-top: 20px;
+`;
+
+export const MotionReorderGroup = styled(Reorder.Group)`
+  list-style: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+`;
 
 export const MotionWrapper = motion(Wrapper);
 export const MotionButton = motion(Button);

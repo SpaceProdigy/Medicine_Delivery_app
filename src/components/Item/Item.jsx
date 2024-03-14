@@ -12,42 +12,52 @@ import {
   Title,
   Wrapper,
 } from './Item.styled';
-
-import { Slide, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { nanoid } from 'nanoid';
 import stub from './../../images/stub.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { choseDrugsThunk } from '../../redux/operations';
 import { selectChoseDrugs } from '../../redux/drugsSlice';
-import {
-  CustomNotification,
-  notification,
-} from 'components/utils/notification';
 import { ButtonAdd } from 'components/ButtonAdd/ButtonAdd';
-
-const notyConfig = {
-  position: 'top-right',
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: 'light',
-  transition: Slide,
-};
+import { useContext } from 'react';
+import { MyContext } from 'components/App';
 
 export const Item = ({ id, title, price, activeIngredient }) => {
   const dispatch = useDispatch();
   const drugsChoseArr = useSelector(selectChoseDrugs);
-  console.log(drugsChoseArr);
+  const { isNotifi, setIsNotyfi } = useContext(MyContext);
+  console.log(isNotifi);
   const handleAddDrugs = async drugId => {
     if (!drugsChoseArr.includes(drugId)) {
       dispatch(choseDrugsThunk(drugId));
-      toast.success('Product added to cart.', notyConfig);
+      setIsNotyfi(prevState => {
+        if (prevState?.length >= 5) {
+          return prevState;
+        }
+        return [
+          ...prevState,
+          {
+            message: 'Product added to cart.',
+            type: 'success',
+            visible: true,
+            id: nanoid(),
+          },
+        ];
+      });
     } else {
-      toast.info('The item is already in the cart.', notyConfig);
+      setIsNotyfi(prevState => {
+        if (prevState?.length >= 5) {
+          return prevState;
+        }
+        return [
+          ...prevState,
+          {
+            message: 'The item is already in the cart.',
+            type: 'info',
+            visible: true,
+            id: nanoid(),
+          },
+        ];
+      });
     }
   };
 
@@ -75,7 +85,6 @@ export const Item = ({ id, title, price, activeIngredient }) => {
           </InfoWrapper>
         </Wrapper>
       </Drug>
-      <CustomNotification message="This is an info notification!" type="info" />
     </>
   );
 };
