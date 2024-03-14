@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/Medicine_Delivery_app/static/css/main.4f84ed34.css",
+    "main.js": "/Medicine_Delivery_app/static/js/main.308d15bd.js",
+    "static/js/219.12cfb402.chunk.js": "/Medicine_Delivery_app/static/js/219.12cfb402.chunk.js",
+    "static/js/174.042a6ed3.chunk.js": "/Medicine_Delivery_app/static/js/174.042a6ed3.chunk.js",
+    "static/js/511.0565ba3b.chunk.js": "/Medicine_Delivery_app/static/js/511.0565ba3b.chunk.js",
+    "static/js/402.895b164e.chunk.js": "/Medicine_Delivery_app/static/js/402.895b164e.chunk.js",
+    "static/js/85.a2f69f28.chunk.js": "/Medicine_Delivery_app/static/js/85.a2f69f28.chunk.js",
+    "static/js/70.a333a644.chunk.js": "/Medicine_Delivery_app/static/js/70.a333a644.chunk.js",
+    "static/js/502.b1586ac4.chunk.js": "/Medicine_Delivery_app/static/js/502.b1586ac4.chunk.js",
+    "static/js/965.54a78bed.chunk.js": "/Medicine_Delivery_app/static/js/965.54a78bed.chunk.js",
+    "static/media/stub.png": "/Medicine_Delivery_app/static/media/stub.193a1e5f51b4f49f7a3a.png",
+    "static/media/warning.png": "/Medicine_Delivery_app/static/media/warning.0fcf26706195a1d02880.png",
+    "static/media/logo.png": "/Medicine_Delivery_app/static/media/logo.7dd09a663be8f5414595.png",
+    "index.html": "/Medicine_Delivery_app/index.html",
+    "main.4f84ed34.css.map": "/Medicine_Delivery_app/static/css/main.4f84ed34.css.map",
+    "main.308d15bd.js.map": "/Medicine_Delivery_app/static/js/main.308d15bd.js.map",
+    "219.12cfb402.chunk.js.map": "/Medicine_Delivery_app/static/js/219.12cfb402.chunk.js.map",
+    "174.042a6ed3.chunk.js.map": "/Medicine_Delivery_app/static/js/174.042a6ed3.chunk.js.map",
+    "511.0565ba3b.chunk.js.map": "/Medicine_Delivery_app/static/js/511.0565ba3b.chunk.js.map",
+    "402.895b164e.chunk.js.map": "/Medicine_Delivery_app/static/js/402.895b164e.chunk.js.map",
+    "85.a2f69f28.chunk.js.map": "/Medicine_Delivery_app/static/js/85.a2f69f28.chunk.js.map",
+    "70.a333a644.chunk.js.map": "/Medicine_Delivery_app/static/js/70.a333a644.chunk.js.map",
+    "502.b1586ac4.chunk.js.map": "/Medicine_Delivery_app/static/js/502.b1586ac4.chunk.js.map",
+    "965.54a78bed.chunk.js.map": "/Medicine_Delivery_app/static/js/965.54a78bed.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4f84ed34.css",
+    "static/js/main.308d15bd.js"
+  ]
+}
