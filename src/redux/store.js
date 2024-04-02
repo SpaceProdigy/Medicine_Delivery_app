@@ -8,10 +8,15 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { drugsReducer } from './drugsSlice';
+
+import { productsReducer } from './productsSlice';
+import { localProductsReducer } from './localOperation';
 
 export const store = configureStore({
-  reducer: { drugs: drugsReducer },
+  reducer: {
+    products: productsReducer,
+    local: localProductsReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

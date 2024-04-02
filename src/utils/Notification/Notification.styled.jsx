@@ -18,9 +18,10 @@ const activeColors = props => {
 
 export const Wrapper = styled.div`
   position: relative;
-  top: 85px;
-  right: 30px;
-  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
   background-color: ${activeColors};
   border-radius: 5px 20px 5px 20px;
   box-shadow: 0px 1px 14px 0px rgba(0, 0, 0, 0.2);
@@ -41,9 +42,31 @@ export const Button = styled.button`
   padding: 1px;
   border-radius: 50%;
   cursor: pointer;
-  transition: opacity 500ms linear;
+  transition: scale 500ms linear, color 500ms linear;
+
+  &:hover {
+    scale: 1.2;
+    color: #ff0000;
+  }
 `;
-export const Text = styled.p``;
+
+export const TextWrapper = styled.div`
+  display: flex;
+`;
+
+export const Text = styled.p`
+  margin: 5px;
+`;
+
+export const BoxTime = styled.div`
+  max-width: 100%;
+  position: absolute;
+  top: -3px;
+  left: 0;
+  height: 10px;
+  border-radius: 10px 5px 0 0;
+  background-color: ${activeColors};
+`;
 
 export const MotionReorderItem = styled(Reorder.Item)`
   :first-child {
@@ -54,12 +77,15 @@ export const MotionReorderItem = styled(Reorder.Item)`
 
 export const MotionReorderGroup = styled(Reorder.Group)`
   list-style: none;
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: fixed;
+  z-index: 100;
+  top: 70px;
+  right: 20px;
   margin: 0;
+  margin-left: 20px;
+  padding: 0;
 `;
 
 export const MotionWrapper = motion(Wrapper);
 export const MotionButton = motion(Button);
-export const MotionText = motion(Text);
+export const MotionLineTime = motion(BoxTime);

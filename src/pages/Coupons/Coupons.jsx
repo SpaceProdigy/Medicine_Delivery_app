@@ -4,25 +4,26 @@ import {
   CouponsItem,
   CouponsList,
   CouponsSection,
+  MotionItem,
   Text,
   TextDiscount,
   TextKey,
 } from './Coupons.styled';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const Coupons = () => {
-  const [copyText, setCopyText] = useState(false);
+  const [iscopyText, setISCopyText] = useState(false);
   const [copyDiscount, setCopyDiscount] = useState(null);
 
   const handleCopyText = text => {
     try {
-      navigator.clipboard.writeText(text);
-      setCopyText(true);
+      setISCopyText(true);
       setCopyDiscount(text);
       setTimeout(() => {
-        setCopyText(false);
+        setISCopyText(false);
       }, 2000);
     } catch (error) {
-      setCopyText(false);
+      setISCopyText(false);
       setCopyDiscount(null);
       console.error('Error to copy', error.message);
     }
@@ -32,15 +33,26 @@ const Coupons = () => {
     <CouponsSection>
       <CouponsList>
         {coupons.map(({ id, discount, couponsKey }) => (
-          <CouponsItem
+          <CopyToClipboard
             key={id}
-            $isCopy={copyText && couponsKey === copyDiscount}
-            onClick={() => handleCopyText(couponsKey)}
+            text={couponsKey}
+            onCopy={() => handleCopyText(couponsKey)}
           >
-            <Text>Discount</Text>
-            <TextDiscount>{discount}%</TextDiscount>
-            <TextKey>{couponsKey}</TextKey>
-          </CouponsItem>
+            <MotionItem
+              whileTap={{ scale: 0.8 }}
+              $isCopy={iscopyText && couponsKey === copyDiscount}
+            >
+              <Text variant="h6" component="div">
+                Discount
+              </Text>
+              <TextDiscount variant="h6" component="div">
+                {discount}%
+              </TextDiscount>
+              <TextKey variant="button" component="div">
+                {couponsKey}
+              </TextKey>
+            </MotionItem>
+          </CopyToClipboard>
         ))}
       </CouponsList>
     </CouponsSection>
