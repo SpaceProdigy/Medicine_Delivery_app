@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { coupons } from 'COUPONS';
 import {
-  CouponsItem,
   CouponsList,
   CouponsSection,
   MotionItem,
