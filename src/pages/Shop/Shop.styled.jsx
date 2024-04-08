@@ -20,8 +20,10 @@ export const ListStyled = styled(List)`
   padding: 0;
   margin-top: 20px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  height: 100%;
   gap: 30px;
 `;
 

@@ -1,4 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import Confetti from 'react-confetti';
+import { useWindowSize } from 'react-use-size';
+
+// UTILS
+import { isEqual } from 'utils/isEqual';
 
 // REACT-HOOK-FORM/YUP
 import { useForm } from 'react-hook-form';
@@ -13,56 +18,44 @@ import { AnimatePresence } from 'framer-motion';
 
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectCartProducts,
-  selectProductsLoading,
-} from '../../redux/productsSlice';
+import { selectCartProducts } from '../../redux/productsSlice';
 import { fetchCartProductThunk } from '../../redux/productsOperations';
-
-// COMPONENTS
-import {
-  ButtonSabmit,
-  CartWrapper,
-  MotionList,
-  SectionCart,
-} from './Cart.styled';
-import { EmptyComponent } from './EmptyComponent/EmptyComponent';
-import { ContactInfo } from './ContactInfo/ContactInfo';
-
-import { CartItem } from './CartItem/CartItem';
+import { selectInputs, updateInputs } from '../../redux/localOperation';
 
 // CONTEXT
 import { MyContext } from 'components/App';
 
-// ICONS
-import LocalMallIcon from '@mui/icons-material/LocalMall';
+// COMPONENTS
+import { CartWrapper, MotionList, SectionCart } from './Cart.styled';
+import { EmptyComponent } from './EmptyComponent/EmptyComponent';
+import { ContactInfo } from './ContactInfo/ContactInfo';
+import { CartItem } from './CartItem/CartItem';
 import { PromoCode } from './PromoCode/PromoCode';
 import { Total } from './Total/Total';
-import { useNavigate } from 'react-router-dom';
-import GooglePayButton from './GooglePayButton/GooglePayButton';
-import {
-  selectInputs,
-  updateHistory,
-  updateInputs,
-  updateOrder,
-} from '../../redux/localOperation';
-import { isEqual } from 'utils/Notification/isEqual';
-import { Loader } from 'components/Loader/Loader';
+import { CartModal } from './Modal/CartModal';
+import { ButtonSabmit } from 'components/ButtonSabmit/ButtonSabmit';
 
 const Cart = () => {
   const { setNewOrder, selectedProductsIds } = useContext(MyContext);
   const dispatch = useDispatch();
   const selectedProducts = useSelector(selectCartProducts);
   const inputsValue = useSelector(selectInputs);
-  const isLoading = useSelector(selectProductsLoading);
-
+  const [isPaid, setIsPaid] = useState(null);
   const [updatedSchema, setUpdatedSchema] = useState(schema);
   const [activeProductId, setActiveProductid] = useState();
   const [products, setProducts] = useState(selectedProducts ?? []);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isDiscount, setIsDiscount] = useState(null);
+  const [isModal, setIsModal] = useState(false);
+  const [orderSubmit, setOrderSubmit] = useState(null);
+
   const { play, theme } = useContext(MyContext);
-  const navigate = useNavigate();
+
+  const { height, width } = useWindowSize();
+
+  useEffect(() => {
+    setProducts(selectedProducts);
+  }, [selectedProducts]);
 
   useEffect(() => {
     if (selectedProducts.length === products.length) {
@@ -87,7 +80,6 @@ const Cart = () => {
   const {
     register,
     handleSubmit,
-    reset,
     watch,
     control,
     formState: { errors },
@@ -108,26 +100,8 @@ const Cart = () => {
   }, [actualInputs, dispatch]);
 
   const onSubmit = data => {
-    const keys = Object.keys(data);
-    const orderedObjects = products.filter(({ id }) =>
-      keys.includes(String(id))
-    );
-    dispatch(
-      updateHistory({
-        orderedObjects,
-        orderInputs: data,
-        totalPrice,
-        totalPriceWithDiscount: isDiscount
-          ? ` ${(totalPrice * (1 - isDiscount.discount / 100)).toFixed(2)} $`
-          : null,
-        isDiscount,
-      })
-    );
-    setNewOrder([]);
-    dispatch(updateOrder([]));
-    dispatch(updateInputs([]));
-    reset();
-    navigate('/history');
+    setIsModal(true);
+    setOrderSubmit(data);
   };
 
   const handleDeselect = event => {
@@ -148,83 +122,87 @@ const Cart = () => {
   return (
     <>
       <SectionCart>
-        {!isLoading ? (
-          <>
-            {selectedProductsIds?.length > 0 ? (
-              <CartWrapper onSubmit={handleSubmit(onSubmit)}>
-                <ContactInfo
-                  register={register}
-                  errors={errors}
-                  control={control}
-                />
+        <AnimatePresence>
+          {selectedProductsIds?.length > 0 ? (
+            <CartWrapper onSubmit={handleSubmit(onSubmit)}>
+              <ContactInfo
+                register={register}
+                errors={errors}
+                control={control}
+              />
 
-                <MotionList
-                  onClick={event => handleDeselect(event)}
-                  axis="y"
-                  onReorder={setProducts}
-                  values={products}
-                  layoutScroll
-                >
-                  <AnimatePresence>
-                    {products?.map(item => (
-                      <CartItem
-                        key={item.id}
-                        item={item}
-                        dispatch={dispatch}
-                        selectedProductsIds={selectedProductsIds}
-                        setActiveProductid={setActiveProductid}
-                        activeProductId={activeProductId}
-                        theme={theme}
-                        play={play}
-                        register={register}
-                        errors={errors}
-                        setUpdatedSchema={setUpdatedSchema}
-                      />
-                    ))}
-                  </AnimatePresence>
-                </MotionList>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    margin: '0 0 40px 0',
-                    gap: 1,
-                    width: '100%',
-                  }}
-                >
-                  <GooglePayButton
-                    isDiscount={isDiscount}
-                    totalPrice={totalPrice}
-                    navigate={navigate}
+              <MotionList
+                onClick={event => handleDeselect(event)}
+                axis="y"
+                onReorder={setProducts}
+                values={products}
+                layoutScroll
+              >
+                {products?.map(item => (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    dispatch={dispatch}
+                    selectedProductsIds={selectedProductsIds}
+                    setActiveProductid={setActiveProductid}
+                    activeProductId={activeProductId}
+                    theme={theme}
                     play={play}
-                  />
-                  <ButtonSabmit
-                    variant="contained"
-                    size="large"
-                    type="submit"
-                    onClick={play}
-                  >
-                    Order
-                    <LocalMallIcon />
-                  </ButtonSabmit>
-                  <Total isDiscount={isDiscount} totalPrice={totalPrice} />
-
-                  <PromoCode
                     register={register}
-                    watch={watch}
-                    setIsDiscount={setIsDiscount}
+                    errors={errors}
+                    setUpdatedSchema={setUpdatedSchema}
                   />
-                </Box>
-              </CartWrapper>
-            ) : (
-              <EmptyComponent />
-            )}
-          </>
-        ) : (
-          <Loader />
-        )}
+                ))}
+              </MotionList>
+              <Box
+                sx={{
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  margin: '0 0 40px 0',
+                  gap: 1,
+                  width: '100%',
+                }}
+              >
+                <ButtonSabmit play={play} />
+
+                <Total isDiscount={isDiscount} totalPrice={totalPrice} />
+
+                <PromoCode
+                  register={register}
+                  watch={watch}
+                  setIsDiscount={setIsDiscount}
+                />
+              </Box>
+            </CartWrapper>
+          ) : (
+            <EmptyComponent />
+          )}
+        </AnimatePresence>
       </SectionCart>
+      {isPaid && (
+        <Confetti
+          key={isPaid ? 'confettiKeyOn' : 'confettiKeyOff'}
+          run={isPaid}
+          width={width}
+          height={height * 2}
+        />
+      )}
+      <CartModal
+        products={products}
+        play={play}
+        setIsModal={setIsModal}
+        isModal={isModal}
+        setIsPaid={setIsPaid}
+        isPaid={isPaid}
+        isDiscount={isDiscount}
+        totalPrice={totalPrice}
+        theme={theme}
+        orderSubmit={orderSubmit}
+        setOrderSubmit={setOrderSubmit}
+        setNewOrder={setNewOrder}
+      />
     </>
   );
 };

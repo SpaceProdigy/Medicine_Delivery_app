@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { selectHistory } from '../../redux/localOperation';
 import {
@@ -56,8 +56,6 @@ const History = () => {
                             sx={{ transition: 'all 1s ease' }}
                           />
                         }
-                        aria-controls="panel1-content"
-                        id="panel1-header"
                         onClick={() => {
                           play();
                         }}

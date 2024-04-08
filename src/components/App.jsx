@@ -26,10 +26,8 @@ import { Disconnected } from './Disconnected/Disconnected';
 const Home = lazy(() => import('../pages/Home/Home'));
 const Cart = lazy(() => import('../pages/Cart/Cart'));
 const ProductInfo = lazy(() => import('../pages/ProductInfo/ProductInfo'));
-
 const Coupons = lazy(() => import('../pages/Coupons/Coupons'));
 const History = lazy(() => import('../pages/History/History'));
-
 const Shop = lazy(() => import('../pages/Shop/Shop'));
 
 export const MyContext = createContext();
@@ -50,7 +48,7 @@ export const App = ({ toggleTheme, theme }) => {
 
   const [play] = useSound(soundClick, { volume: 0.05 });
   const [isNotifi, setIsNotyfi] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [newOrder, setNewOrder] = useState(selectedProductsIds);
 
   useEffect(() => {
@@ -70,6 +68,13 @@ export const App = ({ toggleTheme, theme }) => {
 
   return (
     <>
+      <style>
+        {`
+          body {
+            overflow: ${isMenuOpen ? 'hidden' : 'auto'};
+          }
+        `}
+      </style>
       <AnimatePresence>
         <MyContext.Provider
           value={{
@@ -84,8 +89,8 @@ export const App = ({ toggleTheme, theme }) => {
         >
           <Container
             onClick={evn => {
-              if (isOpen) {
-                evn.target.id !== 'menu' && setIsOpen(false);
+              if (isMenuOpen) {
+                evn.target.id !== 'menu' && setIsMenuOpen(false);
                 evn.target.id !== 'menu' && play();
               }
             }}
@@ -95,6 +100,8 @@ export const App = ({ toggleTheme, theme }) => {
               alignItems: 'center',
               height: '100vh',
               padding: 0,
+              width: '100%',
+              maxWidth: 1920,
             }}
           >
             <motion.div
@@ -105,18 +112,33 @@ export const App = ({ toggleTheme, theme }) => {
               variants={variants}
             >
               <PrimaryAppBar
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
+                setIsMenuOpen={setIsMenuOpen}
+                isMenuOpen={isMenuOpen}
                 location={location}
                 toggleTheme={toggleTheme}
                 theme={theme}
               />
               <PopUpMenuList
                 location={location}
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
+                isMenuOpen={isMenuOpen}
+                setIsMenuOpen={setIsMenuOpen}
               />
             </motion.div>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={stTransition}
+                style={{
+                  position: 'absolute',
+                  background: '#7777772f',
+                  width: '100vw',
+                  height: '100vh',
+                  zIndex: 100,
+                }}
+              />
+            )}
             <main style={{ flex: 1, width: '100%' }}>
               <Suspense fallback={<Loader />}>
                 {navigator.onLine ? (
@@ -138,7 +160,7 @@ export const App = ({ toggleTheme, theme }) => {
                 )}
               </Suspense>
             </main>
-            <div style={{ flexShrink: 0 }}>
+            <div style={{ flexShrink: 0, width: '100%', maxWidth: 1920 }}>
               <Footer />
             </div>
           </Container>

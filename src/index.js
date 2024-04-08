@@ -7,7 +7,7 @@ import { Loader } from 'components/Loader/Loader';
 import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from '@mui/material/styles';
-import { darkTheme, lightTheme } from 'styles/theme';
+import { darkTheme, generalStyles, lightTheme } from 'styles/theme';
 import { CssBaseline } from '@mui/material';
 
 const Root = () => {
@@ -34,7 +34,7 @@ const Root = () => {
       <Provider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
           <BrowserRouter basename="/Medicine_Delivery_app">
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={{ ...theme, generalStyles }}>
               <CssBaseline enableColorScheme={true}>
                 <App toggleTheme={toggleTheme} theme={theme} />
               </CssBaseline>

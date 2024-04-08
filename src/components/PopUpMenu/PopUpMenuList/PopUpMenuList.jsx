@@ -22,38 +22,40 @@ const directions = [
   },
 ];
 
-export const PopUpMenuList = ({ location, isOpen, setIsOpen }) => {
+export const PopUpMenuList = ({ location, isMenuOpen, setIsMenuOpen }) => {
   return (
-    <AnimatePresence mode="wait">
-      {
-        <MotionNanigationStyled
-          id="menu"
-          initial={false}
-          variants={navigation}
-          animate={isOpen ? 'open' : 'closed'}
-        >
-          <motion.ul
-            variants={list}
-            animate={isOpen ? 'open' : 'closed'}
-            style={{
-              listStyle: 'none',
-              padding: 0,
-            }}
+    <>
+      <AnimatePresence mode="wait">
+        {
+          <MotionNanigationStyled
+            id="menu"
+            initial={false}
+            variants={navigation}
+            animate={isMenuOpen ? 'open' : 'closed'}
           >
-            {directions.map(({ name, route }, index) => (
-              <PopUpMenuItem
-                index={index}
-                route={route}
-                name={name}
-                key={index}
-                location={location}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-              />
-            ))}
-          </motion.ul>
-        </MotionNanigationStyled>
-      }
-    </AnimatePresence>
+            <motion.ul
+              variants={list}
+              animate={isMenuOpen ? 'open' : 'closed'}
+              style={{
+                listStyle: 'none',
+                padding: 0,
+              }}
+            >
+              {directions.map(({ name, route }, index) => (
+                <PopUpMenuItem
+                  index={index}
+                  route={route}
+                  name={name}
+                  key={index}
+                  location={location}
+                  setIsMenuOpen={setIsMenuOpen}
+                  isMenuOpen={isMenuOpen}
+                />
+              ))}
+            </motion.ul>
+          </MotionNanigationStyled>
+        }
+      </AnimatePresence>
+    </>
   );
 };

@@ -4,13 +4,7 @@ import React from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 
 // COMPONENTS
-import {
-  BoxTools,
-  FooterStyled,
-  Link,
-  WrapperLeft,
-  WrapperRight,
-} from './Footer.styled';
+import { BoxTools, FooterStyled, Link } from './Footer.styled';
 
 // IMAGES
 import { FaGithub } from 'react-icons/fa';
@@ -20,7 +14,6 @@ import styledIcon from '../../images/styled-components.png';
 
 export const Footer = () => {
   const theme = useTheme();
-  console.log();
 
   return (
     <FooterStyled>

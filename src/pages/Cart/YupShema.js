@@ -27,11 +27,19 @@ export const schema = yup.object({
     ),
 });
 
-export const addFieldToSchema = fieldName => {
-  return schema.shape({
-    [fieldName]: yup
-      .string()
-      .matches(/^\+?[1-9]\d{1,14}$/, 'Please enter a valid phone number')
-      .required('Phone is a required field'),
-  });
-};
+export const cardSchema = yup.object({
+  cardName: yup
+    .string()
+    .required('Card Name is a required')
+    .matches(/^[a-zA-Z]+$/, 'Card Name must contain only Latin letters')
+    .min(2, 'Minimum length 2 characters.')
+    .max(30, 'Minimum length 30 characters.'),
+
+  cardNumber: yup
+    .string()
+    .required('Card Number is required')
+    .length(19, 'Card Number must be exactly 16 digits'),
+  cardYear: yup.string().required('required'),
+  cardMonth: yup.string().required('required'),
+  cardCVV: yup.string().required('required').min(3, 'min 3'),
+});

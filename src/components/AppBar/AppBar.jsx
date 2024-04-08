@@ -1,14 +1,19 @@
-import { Typography, Badge, IconButton, Fade, Box } from '@mui/material';
-
-// SOUND
-import soundClick from '../../Sounds/Button.mp3';
-import useSound from 'use-sound';
+import {
+  Typography,
+  Badge,
+  IconButton,
+  Fade,
+  Box,
+  // MenuItem,
+  // Menu,
+} from '@mui/material';
 
 // ICONS
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
+// import { AccountCircle } from '@mui/icons-material';
 
 // LOGO
 import logo from '../../images/logo.png';
@@ -27,23 +32,38 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { BurgerButton } from 'components/PopUpMenu/BurgerButton/BurgerButton';
 import { saveTheme, selectProductsIdArr } from '../../redux/localOperation';
+import { useContext } from 'react';
+import { MyContext } from 'components/App';
 
 export default function PrimaryAppBar({
-  setIsOpen,
-  isOpen,
+  setIsMenuOpen,
+  isMenuOpen,
   location,
   toggleTheme,
   theme,
 }) {
+  // const [anchorEl, setAnchorEl] = useState(null);
+
+  // const handleMenu = event => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
   const amount = useSelector(selectProductsIdArr);
   const dispatch = useDispatch();
-  const [play] = useSound(soundClick, { volume: 0.05 });
+  const { play } = useContext(MyContext);
 
   return (
     <AppBarStyled>
       <ToolbarStyled>
         <WrapperStyled>
-          <BurgerButton isOpen={isOpen} setIsOpen={setIsOpen} />
+          <BurgerButton
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+            play={play}
+          />
           <BoxStyled>
             <StyledLink
               to={'./shop/categories'}
@@ -111,6 +131,35 @@ export default function PrimaryAppBar({
             </Badge>
           </IconButton>
         </StyledLink>
+        {/* <div>
+          <IconButton size="large" onClick={handleMenu} color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            slotProps={{
+              paper: {
+                style: {
+                  backgroundColor: '#111',
+                },
+              },
+            }}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+          </Menu>
+        </div> */}
       </ToolbarStyled>
     </AppBarStyled>
   );

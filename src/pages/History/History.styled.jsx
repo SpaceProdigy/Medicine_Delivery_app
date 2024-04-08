@@ -2,13 +2,18 @@ import { Accordion, Box, List, ListItem, styled } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 export const StyledList = styled(List)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 70px;
   padding: 0;
+  height: 100%;
   margin-bottom: 40px;
 `;
 
 export const StyledItem = styled(ListItem)`
   width: 100%;
+  max-width: 600px;
   padding: 0;
 `;
 
@@ -43,6 +48,7 @@ export const StyledImage = styled('div')`
 `;
 
 export const AccordionStyled = styled(Accordion)`
+  width: 100%;
   transition: background-color 1s ease;
   background-color: ${({ theme }) =>
     theme?.accordion?.primary.main ?? 'inherit'};

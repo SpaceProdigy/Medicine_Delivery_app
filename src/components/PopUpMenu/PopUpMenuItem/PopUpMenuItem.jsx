@@ -20,8 +20,8 @@ export const PopUpMenuItem = ({
   name,
   route,
   location,
-  setIsOpen,
-  isOpen,
+  setIsMenuOpen,
+  isMenuOpen,
 }) => {
   const { play } = useContext(MyContext);
   const style = { color: ` ${colors[index]}` };
@@ -47,7 +47,7 @@ export const PopUpMenuItem = ({
           <NavLinkStyled
             onClick={() => {
               play();
-              setIsOpen(!isOpen);
+              setIsMenuOpen(!isMenuOpen);
             }}
             to={route}
             state={{ from: location }}

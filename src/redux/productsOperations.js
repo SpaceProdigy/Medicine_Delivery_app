@@ -34,9 +34,12 @@ export const fetchProductsByIdThunk = createAsyncThunk(
 );
 
 export const fetchCartProductThunk = createAsyncThunk(
-  'product/delete',
+  'product/fetchCart',
   async (data, { rejectWithValue }) => {
     try {
+      if (data.length === 0) {
+        return [];
+      }
       const promise = Promise.all(
         data.map(id => axios.get(`https://fakestoreapi.com/products/${id}`))
       ).then(products => products.map(({ data }) => data));

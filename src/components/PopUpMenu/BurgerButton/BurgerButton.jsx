@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion';
-import useSound from 'use-sound';
-import soundClick from '../../../Sounds/Button.mp3';
 import { ButtonStyled } from './BurgerButton.styled';
 
 const Path = props => (
@@ -13,13 +11,12 @@ const Path = props => (
   />
 );
 
-export const BurgerButton = ({ setIsOpen, isOpen }) => {
-  const [play] = useSound(soundClick, { volume: 0.05 });
+export const BurgerButton = ({ setIsMenuOpen, isMenuOpen, play }) => {
   return (
-    <motion.div initial={false} animate={isOpen ? 'open' : 'closed'}>
+    <motion.div initial={false} animate={isMenuOpen ? 'open' : 'closed'}>
       <ButtonStyled
         onClick={() => {
-          setIsOpen(!isOpen);
+          setIsMenuOpen(!isMenuOpen);
           play();
         }}
       >

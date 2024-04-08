@@ -26,7 +26,7 @@ import { FavoriteButton } from '../FavoriteButton/FavoriteButton';
 import { AddButton } from './AddButton/AddButton';
 
 export default function ProductCard({ image, title, price, rating, id }) {
-  const { play, theme } = useContext(MyContext);
+  const { play } = useContext(MyContext);
   const dispatch = useDispatch();
   const favorite = useSelector(selectfavorite);
 

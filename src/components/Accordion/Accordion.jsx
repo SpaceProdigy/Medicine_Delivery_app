@@ -51,7 +51,7 @@ const directions = [
 const colors = ['#FF008C', '#D309E1', '#9C1AFF', '#7700FF', '#4400FF'];
 
 export const AccordionComponent = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { play } = useContext(MyContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,8 +61,8 @@ export const AccordionComponent = () => {
   };
   return (
     <AccordionStyled
-      expanded={isOpen}
-      onChange={(_, expanded) => setIsOpen(expanded)}
+      expanded={isMenuOpen}
+      onChange={(_, expanded) => setIsMenuOpen(expanded)}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon color="secondary" />}
@@ -84,7 +84,7 @@ export const AccordionComponent = () => {
                 event.preventDefault();
                 play();
                 navigate(`/shop/${route}`);
-                setIsOpen(false);
+                setIsMenuOpen(false);
               }}
             >
               <Wrapper style={{ color: colors[index] }}>

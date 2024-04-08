@@ -1,5 +1,48 @@
 import { createTheme } from '@mui/material/styles';
 
+export const generalStyles = {
+  components: {
+    MuiList: {
+      styleOverrides: {
+        root: { height: 200 },
+      },
+    },
+    MuiCssBaseline: {
+      styleOverrides: {
+        'p,button,span': {
+          transition: 'color 1s ease',
+        },
+
+        body: {
+          transition: 'background-color 1s ease',
+        },
+        '::-webkit-scrollbar': {
+          width: '10px',
+        },
+        '::-webkit-scrollbar-track': {
+          background: '#d4d4d4',
+        },
+        '::-webkit-scrollbar-thumb': {
+          background: '#555',
+          borderRadius: '0 5px 5px 0',
+        },
+        '::-webkit-scrollbar-thumb:hover': {
+          background: '#959595',
+        },
+      },
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
+};
+
 export const darkTheme = createTheme({
   type: 'dark',
   palette: {
@@ -32,41 +75,7 @@ export const darkTheme = createTheme({
       main: '#F3F6F9',
     },
   },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
-    },
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        'p,button,span': {
-          transition: 'color 1s ease',
-        },
-
-        body: {
-          transition: 'background-color 1s ease',
-        },
-        '::-webkit-scrollbar': {
-          width: '10px',
-        },
-        '::-webkit-scrollbar-track': {
-          background: '#111',
-        },
-        '::-webkit-scrollbar-thumb': {
-          background: '#555',
-          borderRadius: '0 5px 5px 0',
-        },
-        '::-webkit-scrollbar-thumb:hover': {
-          background: '#959595',
-        },
-      },
-    },
-  },
+  ...generalStyles,
 });
 
 export const lightTheme = createTheme({
@@ -87,39 +96,5 @@ export const lightTheme = createTheme({
     popUpMenuHover: '#11111115',
     linkActive: '#11111150',
   },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
-    },
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        'p,button,span': {
-          transition: 'color 1s ease',
-        },
-
-        body: {
-          transition: 'background-color 1s ease',
-        },
-        '::-webkit-scrollbar': {
-          width: '10px',
-        },
-        '::-webkit-scrollbar-track': {
-          background: '#d4d4d4',
-        },
-        '::-webkit-scrollbar-thumb': {
-          background: '#555',
-          borderRadius: '0 5px 5px 0',
-        },
-        '::-webkit-scrollbar-thumb:hover': {
-          background: '#959595',
-        },
-      },
-    },
-  },
+  ...generalStyles,
 });
