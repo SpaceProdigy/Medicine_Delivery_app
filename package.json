@@ -1,8 +1,8 @@
 {
-  "name": "medicine_delivery_app",
+  "name": "products_app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://SpaceProdigy.github.io/Medicine_Delivery_app/",
+  "homepage": "https://SpaceProdigy.github.io/products_app/",
   "dependencies": {
     "@emotion/styled": "^11.11.0",
     "@google-pay/button-react": "^3.1.0",
