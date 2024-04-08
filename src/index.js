@@ -33,7 +33,7 @@ const Root = () => {
     <React.StrictMode>
       <Provider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
-          <BrowserRouter basename="/Medicine_Delivery_app">
+          <BrowserRouter basename="/products_app">
             <ThemeProvider theme={{ ...theme, generalStyles }}>
               <CssBaseline enableColorScheme={true}>
                 <App toggleTheme={toggleTheme} theme={theme} />
